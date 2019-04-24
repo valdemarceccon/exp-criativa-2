@@ -19,7 +19,8 @@ public class MainPApplet extends PApplet {
     @Override
     public void setup() {
         final Rectangle drawableArea = new Rectangle(width - 800, height - 800, 800, 800);
-        bubbleSort = new PBubbleDrawableSort(this, IntStream.rangeClosed(1,drawableArea.width).toArray(), drawableArea);
+        int[] items = IntStream.rangeClosed(1, drawableArea.width).toArray();
+        bubbleSort = new PBubbleDrawableSort(this, items, drawableArea);
     }
 
     @Override

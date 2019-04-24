@@ -51,6 +51,7 @@ public class PBubbleDrawableSort implements DrawableSort {
             sample[i] = PApplet.sin(processing.TWO_PI*i/items.length);
         }
 
+        // TODO valdemar: This playback is really poorly done. Research a better way.
         // Create the audiosample based on the data, set framerate to play 200 oscillations/second
         AudioSample audioSample = new AudioSample(processing, sample, 200 * sample.length);
 
