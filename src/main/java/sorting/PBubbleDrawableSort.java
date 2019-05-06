@@ -1,92 +1,86 @@
 package sorting;
 
 import processing.core.PApplet;
-import processing.sound.AudioSample;
 
 import java.awt.*;
-import java.util.Random;
 
 public class PBubbleDrawableSort implements DrawableSort {
 
     private final PApplet processing;
-    private final int[] items;
     private final Rectangle drawableBounds;
+    private int borderColor;
+    private int highlight;
+    private SteppabledSort sort;
 
-    public PBubbleDrawableSort(final PApplet processing, final int[] items, final Rectangle drawableBounds) {
+    public PBubbleDrawableSort(final PApplet processing, final java.util.List<Integer> items, final Rectangle drawableBounds) {
         this.processing = processing;
-        this.items = items;
         this.drawableBounds = drawableBounds;
-        shuffle();
+
+        initDefaultValues();
+        sort = new SteppableBubbleSort(items);
+    }
+
+    private void initDefaultValues() {
+        this.borderColor = 0x000000;
+        this.highlight = 0;
     }
 
     @Override
     public void drawNextStep() {
-
         processing.background(255);
-
         drawBorder();
-
         draw();
-
         nextStep();
     }
 
     private void drawBorder() {
-        processing.stroke(0);
-        processing.rect(drawableBounds.x, drawableBounds.y, drawableBounds.x + drawableBounds.width, drawableBounds.y + drawableBounds.height);
+        processing.stroke(this.borderColor);
+        processing.fill(255);
+        drawOffSettedRectangle(0, 0, drawableBounds.width, drawableBounds.height);
     }
 
     private void draw() {
-        processing.stroke(0,0,255);
-        for (int index = 0, itemsLength = items.length; index < itemsLength; index++) {
-            int item = items[index];
-            processing.line(index + drawableBounds.x, processing.height + drawableBounds.y, index + drawableBounds.x, processing.height - item + drawableBounds.y);
+        processing.stroke(0, 0, 255);
+
+        for (int itemIndex = 0, itemsLength = sort.lastStep().size(); itemIndex < itemsLength; itemIndex++) {
+            int xScale = drawableBounds.width / itemsLength;
+            int yScale = drawableBounds.height / itemsLength;
+            int width = drawableBounds.width / itemsLength;
+            int item = sort.lastStep().get(itemIndex) * yScale;
+            highlightRectangle(itemIndex);
+            drawOffSettedRectangle(itemIndex * xScale, drawableBounds.height - item, width, item);
         }
-
-
-
-        float[] sample = new float[items.length];
-
-        for (int i = 0; i < sample.length; i++) {
-            sample[i] = PApplet.sin(processing.TWO_PI*i/items.length);
-        }
+//        float[] sample = new float[items.length];
+//
+//        for (int i = 0; i < sample.length; i++) {
+//            sample[i] = PApplet.sin(processing.TWO_PI*i/items.length);
+//        }
 
         // TODO valdemar: This playback is really poorly done. Research a better way.
         // Create the audiosample based on the data, set framerate to play 200 oscillations/second
-        AudioSample audioSample = new AudioSample(processing, sample, 200 * sample.length);
+//        AudioSample audioSample = new AudioSample(processing, sample, 200 * sample.length);
 
         // Play the sample in a loop (but don't make it too loud)
-        audioSample.amp(0.2f);
-        audioSample.play();
+//        audioSample.amp(0.2f);
+//        audioSample.play();
+    }
+
+    private void highlightRectangle(Integer index) {
+        processing.fill(0, 255, 0);
+        if (sort.highlights().contains(index))
+            processing.fill(255, 0, 0);
+    }
+
+    private void drawOffSettedRectangle(int originX, int originY, int width, int height) {
+        int x1Offset = drawableBounds.x + originX;
+        int y1Offset = drawableBounds.y + originY;
+        processing.rect(x1Offset, y1Offset, width, height);
     }
 
     private void nextStep() {
 
-        for (int index = 0, itemsLength = items.length; index < itemsLength - 1; index++) {
-            int item = items[index];
-            int proxItem = items[index + 1];
-            if (item > proxItem) {
-                swap(index + 1, index);
-            }
-        }
+        sort.executeNextStep();
 
-    }
-
-    private void shuffle() {
-        final Random random = new Random();
-
-        for (int index = 0, length = items.length; index < length; index++) {
-            final int randomIndex = random.nextInt(length);
-            swap(index, randomIndex);
-        }
-
-    }
-
-    private void swap(final int idxA, final int idxB) {
-        final int valorA = items[idxA];
-        final int valorB = items[idxB];
-        items[idxA] = valorB;
-        items[idxB] = valorA;
     }
 
     @Override
