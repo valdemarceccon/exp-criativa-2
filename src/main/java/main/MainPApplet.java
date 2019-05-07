@@ -1,18 +1,19 @@
 package main;
 
 import processing.core.PApplet;
-import processing.core.PImage;
 import sorting.DrawableSort;
 import sorting.PBubbleDrawableSort;
 
 import java.awt.*;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class MainPApplet extends PApplet {
 
     private DrawableSort bubbleSort;
-    private PImage playButton;
+    private ControlPanel controlPanel;
+
 
     @Override
     public void settings() {
@@ -21,15 +22,24 @@ public class MainPApplet extends PApplet {
 
     @Override
     public void setup() {
-        final Rectangle drawableArea = new Rectangle(width - 1000, height - 800, 1000, 800);
-        java.util.List<Integer> items = IntStream.rangeClosed(1, 100).boxed().collect(Collectors.toList());
-        bubbleSort = new PBubbleDrawableSort(this, items, drawableArea);
+        final int sortAreaWidth = 1000;
+        final int sortAreaX = this.width - sortAreaWidth;
+        final int sortAreaHeight = 800;
+        final int sortAreaY = this.height - sortAreaHeight;
+        final Rectangle sortArea = new Rectangle(sortAreaX, sortAreaY, sortAreaWidth, sortAreaHeight);
+        List<Integer> items = IntStream.rangeClosed(1, 100).boxed().collect(Collectors.toList());
+        bubbleSort = new PBubbleDrawableSort(this, items, sortArea);
+        controlPanel = new ControlPanel(this, bubbleSort);
 
         frameRate(100);
     }
 
+
+
     @Override
     public void draw() {
+        background(0xFFFFFF00);
         bubbleSort.drawNextStep();
+        controlPanel.draw();
     }
 }

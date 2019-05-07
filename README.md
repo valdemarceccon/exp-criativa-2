@@ -87,3 +87,6 @@ mvn package
 ## Licença
 
 Este projeto é licenciado através da licença MIT - mais informações em [LICENSE.md](LICENSE.md).
+
+## Créditos
+Icones feito por [Naseer Ahmed](https://www.flaticon.com/authors/naseer-ahmed) licenciado por [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)

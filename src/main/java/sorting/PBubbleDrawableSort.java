@@ -10,14 +10,15 @@ public class PBubbleDrawableSort implements DrawableSort {
     private final Rectangle drawableBounds;
     private int borderColor;
     private int highlight;
-    private SteppabledSort sort;
+    private StepCapableSort sort;
+    private boolean paused = false;
 
     public PBubbleDrawableSort(final PApplet processing, final java.util.List<Integer> items, final Rectangle drawableBounds) {
         this.processing = processing;
         this.drawableBounds = drawableBounds;
 
         initDefaultValues();
-        sort = new SteppableBubbleSort(items);
+        sort = new StepCapableBubbleSort(items);
     }
 
     private void initDefaultValues() {
@@ -78,13 +79,23 @@ public class PBubbleDrawableSort implements DrawableSort {
     }
 
     private void nextStep() {
-
-        sort.executeNextStep();
-
+        if (!paused)
+            sort.executeNextStep();
     }
 
     @Override
     public void drawPreviousStep() {
 
+    }
+
+    @Override
+    public void pause() {
+        this.paused = true;
+
+    }
+
+    @Override
+    public void play() {
+        this.paused = false;
     }
 }

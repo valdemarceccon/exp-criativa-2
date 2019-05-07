@@ -2,7 +2,7 @@ package sorting;
 
 import java.util.List;
 
-public interface SteppabledSort {
+public interface StepCapableSort {
     void executeNextStep();
 
     List<Integer> highlights();
