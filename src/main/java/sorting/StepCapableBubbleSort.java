@@ -4,14 +4,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class SteppableBubbleSort implements SteppabledSort {
+public class StepCapableBubbleSort implements StepCapableSort {
 
     private int index = 0;
     private List<List<Integer>> steps;
     private int upperLimit;
     private List<Integer> hightlights;
 
-    SteppableBubbleSort(List<Integer> items) {
+    StepCapableBubbleSort(List<Integer> items) {
         steps = new LinkedList<>();
         steps.add(shuffle(items));
         upperLimit = lastStep().size();
@@ -32,6 +32,7 @@ public class SteppableBubbleSort implements SteppabledSort {
 
     @Override
     public void executeNextStep() {
+        hightlights.clear();
         if (!isSorted()) {
             int item = lastStep().get(index);
             int proxItem = lastStep().get(index + 1);
