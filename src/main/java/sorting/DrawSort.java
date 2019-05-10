@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 import java.awt.*;
 
-public class PBubbleDrawableSort implements DrawableSort {
+public class DrawSort {
 
     private final PApplet processing;
     private final Rectangle drawableBounds;
@@ -13,7 +13,7 @@ public class PBubbleDrawableSort implements DrawableSort {
     private StepCapableSort sort;
     private boolean paused = false;
 
-    public PBubbleDrawableSort(final PApplet processing, final java.util.List<Integer> items, final Rectangle drawableBounds) {
+    public DrawSort(final PApplet processing, final java.util.List<Integer> items, final Rectangle drawableBounds) {
         this.processing = processing;
         this.drawableBounds = drawableBounds;
 
@@ -26,7 +26,6 @@ public class PBubbleDrawableSort implements DrawableSort {
         this.highlight = 0;
     }
 
-    @Override
     public void drawNextStep() {
         processing.background(255);
         drawBorder();
@@ -83,18 +82,15 @@ public class PBubbleDrawableSort implements DrawableSort {
             sort.executeNextStep();
     }
 
-    @Override
     public void drawPreviousStep() {
 
     }
 
-    @Override
     public void pause() {
         this.paused = true;
 
     }
 
-    @Override
     public void play() {
         this.paused = false;
     }

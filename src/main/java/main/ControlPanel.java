@@ -1,7 +1,7 @@
 package main;
 
 import processing.core.PApplet;
-import sorting.DrawableSort;
+import sorting.DrawSort;
 import ui.Button;
 import ui.Control;
 
@@ -9,14 +9,14 @@ import java.awt.*;
 
 public class ControlPanel {
     private final PApplet processing;
-    private final DrawableSort sort;
+    private final DrawSort sort;
 
     private Button play;
     private Button pause;
     private Button increaseSpeed;
     private Button decreaseSpeed;
 
-    public ControlPanel(final PApplet processing, final DrawableSort sort) {
+    public ControlPanel(final PApplet processing, final DrawSort sort) {
         this.processing = processing;
         this.sort = sort;
 
