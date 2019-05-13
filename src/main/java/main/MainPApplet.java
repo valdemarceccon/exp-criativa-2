@@ -1,8 +1,7 @@
 package main;
 
 import processing.core.PApplet;
-import sorting.DrawableSort;
-import sorting.PBubbleDrawableSort;
+import sorting.DrawSort;
 
 import java.awt.*;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.stream.IntStream;
 
 public class MainPApplet extends PApplet {
 
-    private DrawableSort bubbleSort;
+    private DrawSort bubbleSort;
     private ControlPanel controlPanel;
 
 
@@ -28,7 +27,7 @@ public class MainPApplet extends PApplet {
         final int sortAreaY = this.height - sortAreaHeight;
         final Rectangle sortArea = new Rectangle(sortAreaX, sortAreaY, sortAreaWidth, sortAreaHeight);
         List<Integer> items = IntStream.rangeClosed(1, 100).boxed().collect(Collectors.toList());
-        bubbleSort = new PBubbleDrawableSort(this, items, sortArea);
+        bubbleSort = new DrawSort(this, items, sortArea);
         controlPanel = new ControlPanel(this, bubbleSort);
 
         frameRate(100);

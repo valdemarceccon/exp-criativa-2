@@ -1,22 +1,24 @@
 package main;
 
 import processing.core.PApplet;
-import sorting.DrawableSort;
+import sorting.DrawSort;
 import ui.Button;
 import ui.Control;
+import ui.ToggleButton;
 
 import java.awt.*;
 
 public class ControlPanel {
     private final PApplet processing;
-    private final DrawableSort sort;
+    private final DrawSort sort;
 
     private Button play;
     private Button pause;
     private Button increaseSpeed;
     private Button decreaseSpeed;
+    private ToggleButton volumeButton;
 
-    public ControlPanel(final PApplet processing, final DrawableSort sort) {
+    public ControlPanel(final PApplet processing, final DrawSort sort) {
         this.processing = processing;
         this.sort = sort;
 
@@ -52,6 +54,11 @@ public class ControlPanel {
                 processing.frameRate(100);
             }
         });
+
+        volumeButton = new ToggleButton(processing, createRectangle(index++));
+
+        volumeButton.setButton1(processing.loadShape(Control.MUTE.getPath()), sort::mute);
+        volumeButton.setButton2(processing.loadShape(Control.UNMUTE.getPath()), sort::unmute);
     }
 
     public void draw() {
@@ -59,6 +66,7 @@ public class ControlPanel {
         pause.draw();
         increaseSpeed.draw();
         decreaseSpeed.draw();
+        volumeButton.draw();
     }
 
 

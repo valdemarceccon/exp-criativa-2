@@ -1,32 +1,35 @@
 package sorting;
 
 import processing.core.PApplet;
+import processing.sound.SinOsc;
+import processing.sound.SqrOsc;
 
 import java.awt.*;
 
-public class PBubbleDrawableSort implements DrawableSort {
+public class DrawSort {
 
     private final PApplet processing;
     private final Rectangle drawableBounds;
+    private final SqrOsc sinOsc;
     private int borderColor;
-    private int highlight;
     private StepCapableSort sort;
     private boolean paused = false;
 
-    public PBubbleDrawableSort(final PApplet processing, final java.util.List<Integer> items, final Rectangle drawableBounds) {
+
+    public DrawSort(final PApplet processing, final java.util.List<Integer> items, final Rectangle drawableBounds) {
         this.processing = processing;
         this.drawableBounds = drawableBounds;
-
+        sinOsc = new SqrOsc(processing);
+        sinOsc.play();
+        sinOsc.freq(0);
         initDefaultValues();
         sort = new StepCapableBubbleSort(items);
     }
 
     private void initDefaultValues() {
         this.borderColor = 0x000000;
-        this.highlight = 0;
     }
 
-    @Override
     public void drawNextStep() {
         processing.background(255);
         drawBorder();
@@ -51,19 +54,16 @@ public class PBubbleDrawableSort implements DrawableSort {
             highlightRectangle(itemIndex);
             drawOffSettedRectangle(itemIndex * xScale, drawableBounds.height - item, width, item);
         }
-//        float[] sample = new float[items.length];
-//
-//        for (int i = 0; i < sample.length; i++) {
-//            sample[i] = PApplet.sin(processing.TWO_PI*i/items.length);
-//        }
 
-        // TODO valdemar: This playback is really poorly done. Research a better way.
-        // Create the audiosample based on the data, set framerate to play 200 oscillations/second
-//        AudioSample audioSample = new AudioSample(processing, sample, 200 * sample.length);
+        playSound();
+    }
 
-        // Play the sample in a loop (but don't make it too loud)
-//        audioSample.amp(0.2f);
-//        audioSample.play();
+    private void playSound() {
+        if (!sort.highlights().isEmpty()) {
+            Integer indexToPlay = sort.highlights().get(0);
+            float mappedValue = processing.map(indexToPlay, 1, 100, 100, 1000);
+            this.sinOsc.freq(mappedValue);
+        }
     }
 
     private void highlightRectangle(Integer index) {
@@ -83,19 +83,24 @@ public class PBubbleDrawableSort implements DrawableSort {
             sort.executeNextStep();
     }
 
-    @Override
     public void drawPreviousStep() {
 
     }
 
-    @Override
     public void pause() {
         this.paused = true;
 
     }
 
-    @Override
     public void play() {
         this.paused = false;
+    }
+
+    public void mute() {
+        this.sinOsc.stop();
+    }
+
+    public void unmute() {
+        this.sinOsc.play();
     }
 }
