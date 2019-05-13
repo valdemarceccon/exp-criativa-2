@@ -82,4 +82,7 @@ public class ControlPanel {
 
         return new Rectangle(originX + xOffset, originY + yOffset, w, h);
     }
+
+    public void mouseReleased() {
+    }
 }
