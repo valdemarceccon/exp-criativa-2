@@ -5,8 +5,8 @@ public enum Control {
     PAUSE("control/pause.svg"),
     INCREASE_SPEED("control/fast-forward.svg"),
     DECREASE_SPEED("control/rewind.svg"),
-    MUTE("control/mute.svg"),
-    UNMUTE("control/volume.svg");
+    MUTE("control/volume.svg"),
+    UNMUTE("control/mute.svg");
 
     private final String path;
 

@@ -13,14 +13,13 @@ public class DrawSort {
     private final SqrOsc sinOsc;
     private int borderColor;
     private StepCapableSort sort;
-    private boolean paused = false;
+    private boolean paused = true;
 
 
     public DrawSort(final PApplet processing, final java.util.List<Integer> items, final Rectangle drawableBounds) {
         this.processing = processing;
         this.drawableBounds = drawableBounds;
         sinOsc = new SqrOsc(processing);
-        sinOsc.play();
         sinOsc.freq(0);
         initDefaultValues();
         sort = new StepCapableBubbleSort(items);
