@@ -14,6 +14,7 @@ public class DrawSort {
     private int borderColor;
     private StepCapableSort sort;
     private boolean paused = true;
+    private int stepDisplayed = 0;
 
 
     public DrawSort(final PApplet processing, final java.util.List<Integer> items, final Rectangle drawableBounds) {
@@ -49,12 +50,17 @@ public class DrawSort {
             int xScale = drawableBounds.width / itemsLength;
             int yScale = drawableBounds.height / itemsLength;
             int width = drawableBounds.width / itemsLength;
-            int item = sort.lastStep().get(itemIndex) * yScale;
+            int item = getStepValue(itemIndex) * yScale;
             highlightRectangle(itemIndex);
             drawOffSettedRectangle(itemIndex * xScale, drawableBounds.height - item, width, item);
         }
 
         playSound();
+    }
+
+    private Integer getStepValue(int itemIndex) {
+        if (paused) return sort.currentStep().get(itemIndex);
+        return sort.lastStep().get(itemIndex);
     }
 
     private void playSound() {
@@ -88,7 +94,6 @@ public class DrawSort {
 
     public void pause() {
         this.paused = true;
-
     }
 
     public void play() {
@@ -101,5 +106,15 @@ public class DrawSort {
 
     public void unmute() {
         this.sinOsc.play();
+    }
+
+    public void stepDown() {
+        pause();
+        sort.executePreviousStep();
+    }
+
+    public void stepUp() {
+        pause();
+        sort.executeNextStep();
     }
 }

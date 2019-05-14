@@ -6,13 +6,13 @@ import processing.core.PShape;
 import java.awt.*;
 
 public class ToggleButton {
-    private Button button1;
-    private Button button2;
-    private Button current;
+    private IconButton button1;
+    private IconButton button2;
+    private IconButton current;
 
     public ToggleButton(PApplet processing, Rectangle area) {
-        this.button1 = new Button(processing, area);
-        this.button2 = new Button(processing, area);
+        this.button1 = new IconButton(processing, area);
+        this.button2 = new IconButton(processing, area);
         this.current = button1;
     }
 

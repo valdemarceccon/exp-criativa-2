@@ -2,8 +2,9 @@ package main;
 
 import processing.core.PApplet;
 import sorting.DrawSort;
-import ui.Button;
+import ui.IconButton;
 import ui.Control;
+import ui.TextButton;
 import ui.ToggleButton;
 
 import java.awt.*;
@@ -12,8 +13,10 @@ public class ControlPanel {
     private final PApplet processing;
     private final DrawSort sort;
 
-    private Button increaseSpeed;
-    private Button decreaseSpeed;
+    private IconButton increaseSpeed;
+    private IconButton decreaseSpeed;
+    private IconButton nextStep;
+    private IconButton previousStep;
     private ToggleButton volumeButton;
     private ToggleButton playPauseButton;
 
@@ -37,7 +40,11 @@ public class ControlPanel {
         playPauseButton.setButton1(processing.loadShape(Control.PLAY.getPath()), sort::play);
         playPauseButton.setButton2(processing.loadShape(Control.PAUSE.getPath()), sort::pause);
 
-        decreaseSpeed = new Button(processing, createRectangle(index++));
+        previousStep = new IconButton(processing, createRectangle(index++));
+        previousStep.setButtonShape(processing.loadShape(Control.PREVIOUS_STEP.getPath()));
+        previousStep.setOnClick(sort::stepDown);
+
+        decreaseSpeed = new IconButton(processing, createRectangle(index++));
         decreaseSpeed.setButtonShape(processing.loadShape(Control.DECREASE_SPEED.getPath()));
         decreaseSpeed.setOnClick(() -> {
             processing.frameRate(processing.frameRate - 10);
@@ -46,7 +53,7 @@ public class ControlPanel {
             }
         });
 
-        increaseSpeed = new Button(processing, createRectangle(index++));
+        increaseSpeed = new IconButton(processing, createRectangle(index++));
         increaseSpeed.setButtonShape(processing.loadShape(Control.INCREASE_SPEED.getPath()));
         increaseSpeed.setOnClick(() -> {
             processing.frameRate(processing.frameRate + 10);
@@ -54,6 +61,10 @@ public class ControlPanel {
                 processing.frameRate(100);
             }
         });
+
+        nextStep = new IconButton(processing, createRectangle(index++));
+        nextStep.setButtonShape(processing.loadShape(Control.NEXT_STEP.getPath()));
+        nextStep.setOnClick(sort::stepUp);
 
         volumeButton = new ToggleButton(processing, createRectangle(index++));
 
@@ -66,6 +77,12 @@ public class ControlPanel {
         increaseSpeed.draw();
         decreaseSpeed.draw();
         volumeButton.draw();
+        nextStep.draw();
+        previousStep.draw();
+
+        TextButton b = new TextButton(processing, new Rectangle(400, 10, 100, 50));
+        b.setText("Bubble sort");
+        b.draw();
     }
 
 
