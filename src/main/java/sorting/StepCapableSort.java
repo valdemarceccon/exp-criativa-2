@@ -14,4 +14,7 @@ public interface StepCapableSort {
 
     List<Integer> step(int count);
 
+    int loopCount();
+
+    int swapCount();
 }
