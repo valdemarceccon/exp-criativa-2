@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static sorting.SortUtils.isSorted;
-import static sorting.SortUtils.swap;
 
 public class StepCapableBubbleSort implements StepCapableSort {
 
@@ -13,6 +12,8 @@ public class StepCapableBubbleSort implements StepCapableSort {
     private int upperLimit;
     private List<Integer> hightlights;
     private int stepPosition;
+    private int loopCount = 0;
+    private int swapCount = 0;
 
     StepCapableBubbleSort(List<Integer> items) {
         steps = new LinkedList<>();
@@ -49,7 +50,13 @@ public class StepCapableBubbleSort implements StepCapableSort {
             }
 
             incrementIndex();
+            loopCount++;
         }
+    }
+
+    private List<Integer> swap(List<Integer> sourceList, final int idxA, final int idxB) {
+        swapCount++;
+        return SortUtils.swap(sourceList, idxA, idxB);
     }
 
 
@@ -93,5 +100,15 @@ public class StepCapableBubbleSort implements StepCapableSort {
         if (stepPosition > 0) {
             stepPosition--;
         }
+    }
+
+    @Override
+    public int loopCount() {
+        return loopCount;
+    }
+
+    @Override
+    public int swapCount() {
+        return swapCount;
     }
 }

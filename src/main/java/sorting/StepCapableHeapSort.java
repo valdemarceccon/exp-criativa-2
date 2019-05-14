@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static sorting.SortUtils.isSorted;
-import static sorting.SortUtils.swap;
 
 public class StepCapableHeapSort implements StepCapableSort {
 
@@ -14,6 +13,8 @@ public class StepCapableHeapSort implements StepCapableSort {
     private List<Integer> hightlights;
     private int stepPosition;
     private boolean heapDone = false;
+    private int loopCount = 0;
+    private int swapCount = 0;
 
     StepCapableHeapSort(List<Integer> items) {
         steps = new LinkedList<>();
@@ -45,6 +46,7 @@ public class StepCapableHeapSort implements StepCapableSort {
             steps.add(sort(lastStep()));
 
             incrementIndex();
+            loopCount++;
         }
     }
 
@@ -105,6 +107,11 @@ public class StepCapableHeapSort implements StepCapableSort {
         }
     }
 
+    private List<Integer> swap(List<Integer> sourceList, final int idxA, final int idxB) {
+        swapCount++;
+        return SortUtils.swap(sourceList, idxA, idxB);
+    }
+
     @Override
     public List<Integer> currentStep() {
         return step(stepPosition);
@@ -130,5 +137,15 @@ public class StepCapableHeapSort implements StepCapableSort {
         if (stepPosition > 0) {
             stepPosition--;
         }
+    }
+
+    @Override
+    public int loopCount() {
+        return loopCount;
+    }
+
+    @Override
+    public int swapCount() {
+        return swapCount;
     }
 }

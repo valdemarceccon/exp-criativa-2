@@ -17,7 +17,6 @@ public class DrawSort {
     private StepCapableSort selectedSort;
     private int borderColor;
     private boolean paused = true;
-    private int stepDisplayed = 0;
 
 
     public DrawSort(final PApplet processing, final java.util.List<Integer> items, final Rectangle drawableBounds) {
@@ -70,6 +69,7 @@ public class DrawSort {
         }
 
         playSound();
+        displayInfo();
     }
 
     private Integer getStepValue(int itemIndex) {
@@ -102,8 +102,14 @@ public class DrawSort {
             selectedSort.executeNextStep();
     }
 
-    public void drawPreviousStep() {
-
+    private void displayInfo() {
+        processing.textAlign(processing.LEFT);
+        processing.fill(0xFFFF0000);
+        processing.textSize(20);
+        String info = String.format("Quantidade de loops: %d\nQuantidade de swaps: %d",
+                selectedSort.loopCount(),
+                selectedSort.swapCount());
+        processing.text(info, 20, 150);
     }
 
     public void pause() {
