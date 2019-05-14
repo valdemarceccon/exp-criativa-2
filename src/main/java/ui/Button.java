@@ -1,11 +1,13 @@
 package ui;
 
+import main.EventBus;
+import main.MouseEventListener;
 import processing.core.PApplet;
+import processing.event.MouseEvent;
 
 import java.awt.*;
 
-public abstract class Button {
-    private static boolean mouseReleased;
+public abstract class Button implements MouseEventListener {
     protected final PApplet processing;
     protected final Rectangle buttonSize;
     protected Runnable onClick;
@@ -13,32 +15,27 @@ public abstract class Button {
     public Button(final PApplet processing, final Rectangle buttonSize) {
         this.processing = processing;
         this.buttonSize = buttonSize;
-        this.onClick = () -> {
-        };
+        EventBus.getInstance().subscribe(this);
     }
 
     public abstract void draw();
 
-    public static void mouseReleased() {
-        Button.mouseReleased = true;
-    }
-
-    private boolean isMouseOver() {
+    private boolean isMouseOver(MouseEvent event) {
         int x1 = buttonSize.x;
         int y1 = buttonSize.y;
         int x2 = x1 + buttonSize.width;
         int y2 = y1 + buttonSize.height;
-        return isBetween(x1, processing.mouseX, x2) && isBetween(y1, processing.mouseY, y2);
-    }
-
-    protected void executeEventIfOnBounds() {
-        if (isMouseOver() && Button.mouseReleased) {
-            onClick.run();
-            Button.mouseReleased = false;
-        }
+        return isBetween(x1, event.getX(), x2) && isBetween(y1, event.getY(), y2);
     }
 
     private boolean isBetween(int val1, int val2, int val3) {
         return val2 >= val1 && val2 <= val3;
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent event) {
+        if (isMouseOver(event)) {
+            onClick.run();
+        }
     }
 }

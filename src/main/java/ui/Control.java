@@ -7,8 +7,8 @@ public enum Control {
     PREVIOUS_STEP("control/svg/previous-2.svg"),
     INCREASE_SPEED("control/svg/fast-forward-2.svg"),
     DECREASE_SPEED("control/svg/backward.svg"),
-    MUTE("control/svg/mute.svg"),
-    UNMUTE("control/svg/unmute.svg");
+    MUTE("control/svg/unmute.svg"),
+    UNMUTE("control/svg/mute.svg");
 
     private final String path;
 

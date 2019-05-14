@@ -24,13 +24,9 @@ public class IconButton extends Button {
 
     @Override
     public void draw() {
-        executeEventIfOnBounds();
-
         if (buttonShape != null) {
             processing.shape(buttonShape, buttonSize.x, buttonSize.y, buttonSize.width, buttonSize.height);
         }
-
-
     }
 
 }

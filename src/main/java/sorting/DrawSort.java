@@ -97,6 +97,7 @@ public class DrawSort {
     }
 
     public void play() {
+        System.out.println("chamou do botao play");
         this.paused = false;
     }
 
@@ -105,6 +106,7 @@ public class DrawSort {
     }
 
     public void unmute() {
+        System.out.println("chamou do unmute");
         this.sinOsc.play();
     }
 

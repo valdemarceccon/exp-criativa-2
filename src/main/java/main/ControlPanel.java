@@ -22,6 +22,7 @@ public class ControlPanel {
 
     private boolean soundPlaying;
     private boolean sortPlaying;
+    private TextButton bubbleSort;
 
     public ControlPanel(final PApplet processing, final DrawSort sort) {
         this.processing = processing;
@@ -70,6 +71,10 @@ public class ControlPanel {
 
         volumeButton.setButton1(processing.loadShape(Control.UNMUTE.getPath()), sort::unmute);
         volumeButton.setButton2(processing.loadShape(Control.MUTE.getPath()), sort::mute);
+
+        bubbleSort = new TextButton(processing, new Rectangle(400, 10, 100, 50));
+        bubbleSort.setText("Bubble sort");
+        bubbleSort.draw();
     }
 
     public void draw() {
@@ -79,10 +84,7 @@ public class ControlPanel {
         volumeButton.draw();
         nextStep.draw();
         previousStep.draw();
-
-        TextButton b = new TextButton(processing, new Rectangle(400, 10, 100, 50));
-        b.setText("Bubble sort");
-        b.draw();
+        bubbleSort.draw();
     }
 
 
