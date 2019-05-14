@@ -15,15 +15,12 @@ public class TextButton extends Button {
     @Override
     public void draw() {
         if (text != null) {
-//            processing.textFont(processing.createFont("Arial", 20));
             processing.textSize(20);
-            float textWidth = processing.textWidth(text);
-//            processing.fill(0xFFFFFF00);
             processing.textAlign(processing.CENTER);
             processing.fill(0xFF24a0ed);
-            processing.rect(buttonSize.x, buttonSize.y, textWidth, buttonSize.height, 5);
+            processing.rect(buttonSize.x, buttonSize.y, buttonSize.width, buttonSize.height, 5);
             processing.fill(0xFFFFFFFF);
-            processing.text(text, buttonSize.x, buttonSize.y + buttonSize.height/2 - 10, textWidth, buttonSize.height);
+            processing.text(text, buttonSize.x, buttonSize.y + buttonSize.height/2 - 10, buttonSize.width, buttonSize.height);
         }
     }
 

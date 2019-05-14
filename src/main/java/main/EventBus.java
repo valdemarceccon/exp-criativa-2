@@ -1,7 +1,9 @@
 package main;
 
 import processing.event.MouseEvent;
+import ui.Button;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +25,11 @@ public class EventBus {
         mouseEvents.forEach(mouseEventListener -> mouseEventListener.mouseReleased(event));
     }
 
-    public void subscribe(MouseEventListener event) {
-        this.mouseEvents.add(event);
+    public void subscribe(MouseEventListener ... eventListener) {
+        this.mouseEvents.addAll(Arrays.asList(eventListener));
+    }
+
+    public void unsubscribe(MouseEventListener ... eventListener) {
+        Arrays.stream(eventListener).forEach(this.mouseEvents::remove);
     }
 }

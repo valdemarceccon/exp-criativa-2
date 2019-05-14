@@ -6,6 +6,8 @@ import processing.sound.SqrOsc;
 
 import java.awt.*;
 
+import static processing.core.PApplet.map;
+
 public class DrawSort {
 
     private final PApplet processing;
@@ -66,7 +68,7 @@ public class DrawSort {
     private void playSound() {
         if (!sort.highlights().isEmpty()) {
             Integer indexToPlay = sort.highlights().get(0);
-            float mappedValue = processing.map(indexToPlay, 1, 100, 100, 1000);
+            float mappedValue = map(indexToPlay, 1, 100, 100, 1000);
             this.sinOsc.freq(mappedValue);
         }
     }
@@ -97,7 +99,6 @@ public class DrawSort {
     }
 
     public void play() {
-        System.out.println("chamou do botao play");
         this.paused = false;
     }
 
@@ -106,7 +107,6 @@ public class DrawSort {
     }
 
     public void unmute() {
-        System.out.println("chamou do unmute");
         this.sinOsc.play();
     }
 

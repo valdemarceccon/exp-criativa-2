@@ -19,10 +19,11 @@ public class ControlPanel {
     private IconButton previousStep;
     private ToggleButton volumeButton;
     private ToggleButton playPauseButton;
+    private TextButton bubbleSortButton;
+    private TextButton heapSort;
 
     private boolean soundPlaying;
     private boolean sortPlaying;
-    private TextButton bubbleSort;
 
     public ControlPanel(final PApplet processing, final DrawSort sort) {
         this.processing = processing;
@@ -72,9 +73,11 @@ public class ControlPanel {
         volumeButton.setButton1(processing.loadShape(Control.UNMUTE.getPath()), sort::unmute);
         volumeButton.setButton2(processing.loadShape(Control.MUTE.getPath()), sort::mute);
 
-        bubbleSort = new TextButton(processing, new Rectangle(400, 10, 100, 50));
-        bubbleSort.setText("Bubble sort");
-        bubbleSort.draw();
+        bubbleSortButton = new TextButton(processing, new Rectangle(400, 10, 150, 50));
+        bubbleSortButton.setText("Bubble sort");
+
+        heapSort = new TextButton(processing, new Rectangle(560, 10, 150, 50));
+        heapSort.setText("Heap sort");
     }
 
     public void draw() {
@@ -84,7 +87,8 @@ public class ControlPanel {
         volumeButton.draw();
         nextStep.draw();
         previousStep.draw();
-        bubbleSort.draw();
+        bubbleSortButton.draw();
+        heapSort.draw();
     }
 
 
