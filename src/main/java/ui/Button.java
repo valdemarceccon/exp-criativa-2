@@ -38,4 +38,8 @@ public abstract class Button implements MouseEventListener {
             onClick.run();
         }
     }
+
+    public void setOnClick(Runnable onClick) {
+        this.onClick = onClick;
+    }
 }

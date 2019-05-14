@@ -2,8 +2,8 @@ package main;
 
 import processing.core.PApplet;
 import sorting.DrawSort;
-import ui.IconButton;
 import ui.Control;
+import ui.IconButton;
 import ui.TextButton;
 import ui.ToggleButton;
 
@@ -74,9 +74,11 @@ public class ControlPanel {
         volumeButton.setButton2(processing.loadShape(Control.MUTE.getPath()), sort::mute);
 
         bubbleSortButton = new TextButton(processing, new Rectangle(400, 10, 150, 50));
+        bubbleSortButton.setOnClick(this.sort::selectBubbleSort);
         bubbleSortButton.setText("Bubble sort");
 
         heapSort = new TextButton(processing, new Rectangle(560, 10, 150, 50));
+        heapSort.setOnClick(this.sort::selectHeapSort);
         heapSort.setText("Heap sort");
     }
 
