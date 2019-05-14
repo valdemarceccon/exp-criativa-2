@@ -39,7 +39,7 @@ public class MainPApplet extends PApplet {
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        Button.mouseReleased();
+        EventBus.getInstance().mouseReleased(event);
     }
 
     @Override

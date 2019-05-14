@@ -2,8 +2,9 @@ package main;
 
 import processing.core.PApplet;
 import sorting.DrawSort;
-import ui.Button;
+import ui.IconButton;
 import ui.Control;
+import ui.TextButton;
 import ui.ToggleButton;
 
 import java.awt.*;
@@ -12,10 +13,14 @@ public class ControlPanel {
     private final PApplet processing;
     private final DrawSort sort;
 
-    private Button increaseSpeed;
-    private Button decreaseSpeed;
+    private IconButton increaseSpeed;
+    private IconButton decreaseSpeed;
+    private IconButton nextStep;
+    private IconButton previousStep;
     private ToggleButton volumeButton;
     private ToggleButton playPauseButton;
+    private TextButton bubbleSortButton;
+    private TextButton heapSort;
 
     private boolean soundPlaying;
     private boolean sortPlaying;
@@ -37,7 +42,11 @@ public class ControlPanel {
         playPauseButton.setButton1(processing.loadShape(Control.PLAY.getPath()), sort::play);
         playPauseButton.setButton2(processing.loadShape(Control.PAUSE.getPath()), sort::pause);
 
-        decreaseSpeed = new Button(processing, createRectangle(index++));
+        previousStep = new IconButton(processing, createRectangle(index++));
+        previousStep.setButtonShape(processing.loadShape(Control.PREVIOUS_STEP.getPath()));
+        previousStep.setOnClick(sort::stepDown);
+
+        decreaseSpeed = new IconButton(processing, createRectangle(index++));
         decreaseSpeed.setButtonShape(processing.loadShape(Control.DECREASE_SPEED.getPath()));
         decreaseSpeed.setOnClick(() -> {
             processing.frameRate(processing.frameRate - 10);
@@ -46,7 +55,7 @@ public class ControlPanel {
             }
         });
 
-        increaseSpeed = new Button(processing, createRectangle(index++));
+        increaseSpeed = new IconButton(processing, createRectangle(index++));
         increaseSpeed.setButtonShape(processing.loadShape(Control.INCREASE_SPEED.getPath()));
         increaseSpeed.setOnClick(() -> {
             processing.frameRate(processing.frameRate + 10);
@@ -55,10 +64,20 @@ public class ControlPanel {
             }
         });
 
+        nextStep = new IconButton(processing, createRectangle(index++));
+        nextStep.setButtonShape(processing.loadShape(Control.NEXT_STEP.getPath()));
+        nextStep.setOnClick(sort::stepUp);
+
         volumeButton = new ToggleButton(processing, createRectangle(index++));
 
         volumeButton.setButton1(processing.loadShape(Control.UNMUTE.getPath()), sort::unmute);
         volumeButton.setButton2(processing.loadShape(Control.MUTE.getPath()), sort::mute);
+
+        bubbleSortButton = new TextButton(processing, new Rectangle(400, 10, 150, 50));
+        bubbleSortButton.setText("Bubble sort");
+
+        heapSort = new TextButton(processing, new Rectangle(560, 10, 150, 50));
+        heapSort.setText("Heap sort");
     }
 
     public void draw() {
@@ -66,6 +85,10 @@ public class ControlPanel {
         increaseSpeed.draw();
         decreaseSpeed.draw();
         volumeButton.draw();
+        nextStep.draw();
+        previousStep.draw();
+        bubbleSortButton.draw();
+        heapSort.draw();
     }
 
 

@@ -10,12 +10,14 @@ public class StepCapableBubbleSort implements StepCapableSort {
     private List<List<Integer>> steps;
     private int upperLimit;
     private List<Integer> hightlights;
+    private int stepPosition;
 
     StepCapableBubbleSort(List<Integer> items) {
         steps = new LinkedList<>();
         steps.add(shuffle(items));
         upperLimit = lastStep().size();
         hightlights = new LinkedList<>();
+        stepPosition = 0;
     }
 
     private List<Integer> shuffle(List<Integer> items) {
@@ -33,6 +35,20 @@ public class StepCapableBubbleSort implements StepCapableSort {
     @Override
     public void executeNextStep() {
         hightlights.clear();
+        if (stepPosition > steps.size()-2) {
+            calculeNextStep();
+        } else {
+            incrementStep();
+        }
+    }
+
+    private void incrementStep() {
+        if (stepPosition < steps.size()-1) {
+            stepPosition++;
+        }
+    }
+
+    private void calculeNextStep() {
         if (!isSorted()) {
             int item = lastStep().get(index);
             int proxItem = lastStep().get(index + 1);
@@ -78,6 +94,11 @@ public class StepCapableBubbleSort implements StepCapableSort {
     }
 
     @Override
+    public List<Integer> currentStep() {
+        return step(stepPosition);
+    }
+
+    @Override
     public List<Integer> highlights() {
         return hightlights;
     }
@@ -88,7 +109,14 @@ public class StepCapableBubbleSort implements StepCapableSort {
     }
 
     @Override
-    public List<Integer> step(int count) {
-        return steps.get(count);
+    public List<Integer> step(int at) {
+        return steps.get(at);
+    }
+
+    @Override
+    public void executePreviousStep() {
+        if (stepPosition > 0) {
+            stepPosition--;
+        }
     }
 }

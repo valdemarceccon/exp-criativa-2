@@ -6,6 +6,8 @@ import processing.sound.SqrOsc;
 
 import java.awt.*;
 
+import static processing.core.PApplet.map;
+
 public class DrawSort {
 
     private final PApplet processing;
@@ -14,6 +16,7 @@ public class DrawSort {
     private int borderColor;
     private StepCapableSort sort;
     private boolean paused = true;
+    private int stepDisplayed = 0;
 
 
     public DrawSort(final PApplet processing, final java.util.List<Integer> items, final Rectangle drawableBounds) {
@@ -49,7 +52,7 @@ public class DrawSort {
             int xScale = drawableBounds.width / itemsLength;
             int yScale = drawableBounds.height / itemsLength;
             int width = drawableBounds.width / itemsLength;
-            int item = sort.lastStep().get(itemIndex) * yScale;
+            int item = getStepValue(itemIndex) * yScale;
             highlightRectangle(itemIndex);
             drawOffSettedRectangle(itemIndex * xScale, drawableBounds.height - item, width, item);
         }
@@ -57,10 +60,15 @@ public class DrawSort {
         playSound();
     }
 
+    private Integer getStepValue(int itemIndex) {
+        if (paused) return sort.currentStep().get(itemIndex);
+        return sort.lastStep().get(itemIndex);
+    }
+
     private void playSound() {
         if (!sort.highlights().isEmpty()) {
             Integer indexToPlay = sort.highlights().get(0);
-            float mappedValue = processing.map(indexToPlay, 1, 100, 100, 1000);
+            float mappedValue = map(indexToPlay, 1, 100, 100, 1000);
             this.sinOsc.freq(mappedValue);
         }
     }
@@ -88,7 +96,6 @@ public class DrawSort {
 
     public void pause() {
         this.paused = true;
-
     }
 
     public void play() {
@@ -101,5 +108,15 @@ public class DrawSort {
 
     public void unmute() {
         this.sinOsc.play();
+    }
+
+    public void stepDown() {
+        pause();
+        sort.executePreviousStep();
+    }
+
+    public void stepUp() {
+        pause();
+        sort.executeNextStep();
     }
 }

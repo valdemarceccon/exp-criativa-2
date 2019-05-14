@@ -1,12 +1,14 @@
 package ui;
 
 public enum Control {
-    PLAY("control/play-button.svg"),
-    PAUSE("control/pause.svg"),
-    INCREASE_SPEED("control/fast-forward.svg"),
-    DECREASE_SPEED("control/rewind.svg"),
-    MUTE("control/volume.svg"),
-    UNMUTE("control/mute.svg");
+    PLAY("control/svg/play-2.svg"),
+    PAUSE("control/svg/pause-2.svg"),
+    NEXT_STEP("control/svg/skip-2.svg"),
+    PREVIOUS_STEP("control/svg/previous-2.svg"),
+    INCREASE_SPEED("control/svg/fast-forward-2.svg"),
+    DECREASE_SPEED("control/svg/backward.svg"),
+    MUTE("control/svg/unmute.svg"),
+    UNMUTE("control/svg/mute.svg");
 
     private final String path;
 

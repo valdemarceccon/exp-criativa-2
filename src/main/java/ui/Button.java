@@ -1,63 +1,41 @@
 package ui;
 
+import main.EventBus;
+import main.MouseEventListener;
 import processing.core.PApplet;
-import processing.core.PShape;
+import processing.event.MouseEvent;
 
 import java.awt.*;
 
-public class Button {
-
-    private static boolean mouseReleased;
-    private final PApplet processing;
-    private final Rectangle buttonSize;
-
-    private PShape buttonShape;
-    private Runnable onClick;
+public abstract class Button implements MouseEventListener {
+    protected final PApplet processing;
+    protected final Rectangle buttonSize;
+    protected Runnable onClick;
 
     public Button(final PApplet processing, final Rectangle buttonSize) {
         this.processing = processing;
         this.buttonSize = buttonSize;
-
-        this.onClick = () -> {
-        };
+        EventBus.getInstance().subscribe(this);
     }
 
-    public static void mouseReleased() {
-        Button.mouseReleased = true;
-    }
+    public abstract void draw();
 
-    public void setButtonShape(PShape buttonShape) {
-        this.buttonShape = buttonShape;
-    }
-
-    public void setOnClick(Runnable onClick) {
-        this.onClick = onClick;
-    }
-
-    public void draw() {
-        executeEventIfOnBounds();
-
-        if (buttonShape != null) {
-            processing.shape(buttonShape, buttonSize.x, buttonSize.y, buttonSize.width, buttonSize.height);
-        }
-    }
-
-    private boolean isMouseOver() {
+    private boolean isMouseOver(MouseEvent event) {
         int x1 = buttonSize.x;
         int y1 = buttonSize.y;
         int x2 = x1 + buttonSize.width;
         int y2 = y1 + buttonSize.height;
-        return isBetween(x1, processing.mouseX, x2) && isBetween(y1, processing.mouseY, y2);
-    }
-
-    private void executeEventIfOnBounds() {
-        if (isMouseOver() && Button.mouseReleased) {
-            onClick.run();
-            Button.mouseReleased = false;
-        }
+        return isBetween(x1, event.getX(), x2) && isBetween(y1, event.getY(), y2);
     }
 
     private boolean isBetween(int val1, int val2, int val3) {
         return val2 >= val1 && val2 <= val3;
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent event) {
+        if (isMouseOver(event)) {
+            onClick.run();
+        }
     }
 }
