@@ -1,7 +1,6 @@
 package sorting;
 
 import processing.core.PApplet;
-import processing.sound.SinOsc;
 import processing.sound.SqrOsc;
 
 import java.awt.*;
@@ -13,8 +12,10 @@ public class DrawSort {
     private final PApplet processing;
     private final Rectangle drawableBounds;
     private final SqrOsc sinOsc;
+    private final StepCapableSort heapSort;
+    private final StepCapableSort bubbleSort;
+    private StepCapableSort selectedSort;
     private int borderColor;
-    private StepCapableSort sort;
     private boolean paused = true;
     private int stepDisplayed = 0;
 
@@ -25,7 +26,18 @@ public class DrawSort {
         sinOsc = new SqrOsc(processing);
         sinOsc.freq(0);
         initDefaultValues();
-        sort = new StepCapableBubbleSort(items);
+        heapSort = new StepCapableHeapSort(items);
+        bubbleSort = new StepCapableBubbleSort(items);
+
+        selectedSort = bubbleSort;
+    }
+
+    public void selectHeapSort() {
+        this.selectedSort = this.heapSort;
+    }
+
+    public void selectBubbleSort() {
+        this.selectedSort = this.bubbleSort;
     }
 
     private void initDefaultValues() {
@@ -48,7 +60,7 @@ public class DrawSort {
     private void draw() {
         processing.stroke(0, 0, 255);
 
-        for (int itemIndex = 0, itemsLength = sort.lastStep().size(); itemIndex < itemsLength; itemIndex++) {
+        for (int itemIndex = 0, itemsLength = selectedSort.lastStep().size(); itemIndex < itemsLength; itemIndex++) {
             int xScale = drawableBounds.width / itemsLength;
             int yScale = drawableBounds.height / itemsLength;
             int width = drawableBounds.width / itemsLength;
@@ -61,13 +73,13 @@ public class DrawSort {
     }
 
     private Integer getStepValue(int itemIndex) {
-        if (paused) return sort.currentStep().get(itemIndex);
-        return sort.lastStep().get(itemIndex);
+        if (paused) return selectedSort.currentStep().get(itemIndex);
+        return selectedSort.lastStep().get(itemIndex);
     }
 
     private void playSound() {
-        if (!sort.highlights().isEmpty()) {
-            Integer indexToPlay = sort.highlights().get(0);
+        if (!selectedSort.highlights().isEmpty()) {
+            Integer indexToPlay = selectedSort.highlights().get(0);
             float mappedValue = map(indexToPlay, 1, 100, 100, 1000);
             this.sinOsc.freq(mappedValue);
         }
@@ -75,7 +87,7 @@ public class DrawSort {
 
     private void highlightRectangle(Integer index) {
         processing.fill(0, 255, 0);
-        if (sort.highlights().contains(index))
+        if (heapSort.highlights().contains(index))
             processing.fill(255, 0, 0);
     }
 
@@ -87,7 +99,7 @@ public class DrawSort {
 
     private void nextStep() {
         if (!paused)
-            sort.executeNextStep();
+            selectedSort.executeNextStep();
     }
 
     public void drawPreviousStep() {
@@ -112,11 +124,11 @@ public class DrawSort {
 
     public void stepDown() {
         pause();
-        sort.executePreviousStep();
+        selectedSort.executePreviousStep();
     }
 
     public void stepUp() {
         pause();
-        sort.executeNextStep();
+        selectedSort.executeNextStep();
     }
 }

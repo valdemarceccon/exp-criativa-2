@@ -18,9 +18,6 @@ public class IconButton extends Button {
         this.buttonShape = buttonShape;
     }
 
-    public void setOnClick(Runnable onClick) {
-        this.onClick = onClick;
-    }
 
     @Override
     public void draw() {
