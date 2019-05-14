@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class Button {
 
+    private static boolean mouseReleased;
     private final PApplet processing;
     private final Rectangle buttonSize;
 
@@ -21,6 +22,10 @@ public class Button {
         };
     }
 
+    public static void mouseReleased() {
+        Button.mouseReleased = true;
+    }
+
     public void setButtonShape(PShape buttonShape) {
         this.buttonShape = buttonShape;
     }
@@ -30,10 +35,7 @@ public class Button {
     }
 
     public void draw() {
-        if (processing.mousePressed) {
-            processing.mouseClicked();
-            executeEventIfOnBounds();
-        }
+        executeEventIfOnBounds();
 
         if (buttonShape != null) {
             processing.shape(buttonShape, buttonSize.x, buttonSize.y, buttonSize.width, buttonSize.height);
@@ -49,8 +51,9 @@ public class Button {
     }
 
     private void executeEventIfOnBounds() {
-        if (isMouseOver()) {
+        if (isMouseOver() && Button.mouseReleased) {
             onClick.run();
+            Button.mouseReleased = false;
         }
     }
 

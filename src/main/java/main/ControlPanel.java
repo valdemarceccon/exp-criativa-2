@@ -12,31 +12,31 @@ public class ControlPanel {
     private final PApplet processing;
     private final DrawSort sort;
 
-    private Button play;
-    private Button pause;
     private Button increaseSpeed;
     private Button decreaseSpeed;
     private ToggleButton volumeButton;
+    private ToggleButton playPauseButton;
+
+    private boolean soundPlaying;
+    private boolean sortPlaying;
 
     public ControlPanel(final PApplet processing, final DrawSort sort) {
         this.processing = processing;
         this.sort = sort;
+        this.soundPlaying = false;
+        this.sortPlaying = false;
 
         loadControl();
     }
 
     private void loadControl() {
         int index = 0;
-        play = new Button(processing, createRectangle(index++));
-        play.setButtonShape(processing.loadShape(Control.PLAY.getPath()));
-        play.setOnClick(() -> {
-            sort.play();
-        });
-        pause = new Button(processing, createRectangle(index++));
-        pause.setButtonShape(processing.loadShape(Control.PAUSE.getPath()));
-        pause.setOnClick(() -> {
-            sort.pause();
-        });
+
+        playPauseButton = new ToggleButton(processing, createRectangle(index++));
+
+        playPauseButton.setButton1(processing.loadShape(Control.PLAY.getPath()), sort::play);
+        playPauseButton.setButton2(processing.loadShape(Control.PAUSE.getPath()), sort::pause);
+
         decreaseSpeed = new Button(processing, createRectangle(index++));
         decreaseSpeed.setButtonShape(processing.loadShape(Control.DECREASE_SPEED.getPath()));
         decreaseSpeed.setOnClick(() -> {
@@ -57,13 +57,12 @@ public class ControlPanel {
 
         volumeButton = new ToggleButton(processing, createRectangle(index++));
 
-        volumeButton.setButton1(processing.loadShape(Control.MUTE.getPath()), sort::mute);
-        volumeButton.setButton2(processing.loadShape(Control.UNMUTE.getPath()), sort::unmute);
+        volumeButton.setButton1(processing.loadShape(Control.UNMUTE.getPath()), sort::unmute);
+        volumeButton.setButton2(processing.loadShape(Control.MUTE.getPath()), sort::mute);
     }
 
     public void draw() {
-        play.draw();
-        pause.draw();
+        playPauseButton.draw();
         increaseSpeed.draw();
         decreaseSpeed.draw();
         volumeButton.draw();
@@ -81,5 +80,16 @@ public class ControlPanel {
         final int yOffset = 0;
 
         return new Rectangle(originX + xOffset, originY + yOffset, w, h);
+    }
+
+    public void mouseReleased() {
+    }
+
+    public boolean isSoundPlaying() {
+        return soundPlaying;
+    }
+
+    public boolean isSortPlaying() {
+        return sortPlaying;
     }
 }
