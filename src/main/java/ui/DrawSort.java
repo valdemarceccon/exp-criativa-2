@@ -1,7 +1,10 @@
-package sorting;
+package ui;
 
 import processing.core.PApplet;
 import processing.sound.SqrOsc;
+import sorting.StepCapableBubbleSort;
+import sorting.StepCapableHeapSort;
+import sorting.StepCapableSort;
 
 import java.awt.*;
 

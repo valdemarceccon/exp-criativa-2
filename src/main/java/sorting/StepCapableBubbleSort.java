@@ -14,7 +14,7 @@ public class StepCapableBubbleSort implements StepCapableSort {
     private List<Integer> hightlights;
     private int stepPosition;
 
-    StepCapableBubbleSort(List<Integer> items) {
+    public StepCapableBubbleSort(List<Integer> items) {
         steps = new LinkedList<>();
         steps.add(items);
         upperLimit = lastStep().size();

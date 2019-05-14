@@ -15,7 +15,7 @@ public class StepCapableHeapSort implements StepCapableSort {
     private int stepPosition;
     private boolean heapDone = false;
 
-    StepCapableHeapSort(List<Integer> items) {
+    public StepCapableHeapSort(List<Integer> items) {
         steps = new LinkedList<>();
         steps.add(items);
         upperLimit = lastStep().size();

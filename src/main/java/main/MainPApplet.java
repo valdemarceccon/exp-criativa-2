@@ -2,7 +2,8 @@ package main;
 
 import processing.core.PApplet;
 import processing.event.MouseEvent;
-import sorting.DrawSort;
+import ui.DrawSort;
+import ui.ControlPanel;
 
 import java.awt.*;
 import java.util.Collections;

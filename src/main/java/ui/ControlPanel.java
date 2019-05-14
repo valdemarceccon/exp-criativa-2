@@ -1,11 +1,6 @@
-package main;
+package ui;
 
 import processing.core.PApplet;
-import sorting.DrawSort;
-import ui.Control;
-import ui.IconButton;
-import ui.TextButton;
-import ui.ToggleButton;
 
 import java.awt.*;
 
@@ -70,8 +65,8 @@ public class ControlPanel {
 
         volumeButton = new ToggleButton(processing, createRectangle(index++));
 
-        volumeButton.setButton1(processing.loadShape(Control.UNMUTE.getPath()), sort::unmute);
-        volumeButton.setButton2(processing.loadShape(Control.MUTE.getPath()), sort::mute);
+        volumeButton.setButton1(processing.loadShape(Control.MUTE.getPath()), sort::mute);
+        volumeButton.setButton2(processing.loadShape(Control.UNMUTE.getPath()), sort::unmute);
 
         bubbleSortButton = new TextButton(processing, new Rectangle(400, 10, 150, 50));
         bubbleSortButton.setOnClick(this.sort::selectBubbleSort);
